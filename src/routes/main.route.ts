@@ -13,8 +13,8 @@ export class MainRoute {
     }
 
     private createRoutes(router: Router) {
-        router.get('/user/list', this.mainController.sendListResponce.bind(this));
-        router.post('/user/add', this.mainController.addUser.bind(this));
+        router.get('/user/list', this.mainController.sendListResponce.bind(this.mainController));
+        router.post('/user/add', this.mainController.addUser.bind(this.mainController));
     }
 
 }
