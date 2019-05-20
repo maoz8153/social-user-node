@@ -5,13 +5,10 @@ import { MainController } from '../controllers/controller.main';
 
 export class MainRoute {
 
-    public router: Router;
     private mainController: MainController;
 
-    constructor(app: express.Application) {
-        this.router = Router();
-        this.mainController = new MainController(this.router);
-        app.use(this.router);
+    constructor(router: Router) {
+        this.mainController = new MainController(router);
     }
 
 }
