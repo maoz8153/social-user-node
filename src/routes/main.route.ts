@@ -8,7 +8,13 @@ export class MainRoute {
     private mainController: MainController;
 
     constructor(router: Router) {
-        this.mainController = new MainController(router);
+        this.mainController = new MainController();
+        this.createRoutes(router);
+    }
+
+    private createRoutes(router: Router) {
+        router.get('/user/list', this.mainController.sendListResponce.bind(this));
+        router.post('/user/add', this.mainController.addUser.bind(this));
     }
 
 }

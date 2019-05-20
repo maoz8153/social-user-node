@@ -4,22 +4,16 @@ import { UserCard } from '../models/user-card';
 
 export class MainController {
 
-    public router: Router;
     public userList: UserCard[] = [];
 
-    constructor(router: Router) {
+    constructor() {
         this.userList = [];
-        this.router = router;
-        this.createRoutes();
         this.readJsonData();
     }
 
-    private createRoutes() {
-        this.router.get('/user/list', this.sendListResponce.bind(this));
-        this.router.post('/user/add', this.addUser.bind(this));
-    }
 
-    private addUser(req: Request, res: Response) {
+
+    public addUser(req: Request, res: Response) {
         try {
             this.updateUserList(req.body)
             res.send({ sucsses: true });
@@ -32,7 +26,7 @@ export class MainController {
         this.userList.push(userCard);
     }
 
-    private sendListResponce(req: Request, res: Response) {
+    public sendListResponce(req: Request, res: Response) {
         try {
             res.send(this.userList);
         } catch (err) {
