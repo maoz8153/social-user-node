@@ -1,17 +1,17 @@
 import { Router, Response } from 'express'
-import * as fs from 'fs'
+import fs from 'fs'
 import { UserCard } from '../models/user-card';
 
 export class MainController {
 
     public router: Router;
-    public userList : UserCard[] = [];
+    public userList: UserCard[] = [];
 
     constructor(router: Router) {
         this.userList = [];
         this.router = router;
         this.createRoutes();
-         this.readJsonData();
+        this.readJsonData();
     }
 
     private createRoutes() {
@@ -22,7 +22,7 @@ export class MainController {
     private addUser(req: Request, res: Response) {
         try {
             this.updateUserList(req.body)
-            res.send({sucsses: true});
+            res.send({ sucsses: true });
         } catch (err) {
             console.log(err);
         }
