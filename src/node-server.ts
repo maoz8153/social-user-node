@@ -53,8 +53,8 @@ export class NodeServer {
 
 
     private listen(): void {
-        this.server.listen(this.port, () => {
-            console.log('Running server on port %s', this.port);
+        this.server.listen(this.config.NODE_PORT, () => {
+            console.log('Running server on port %s', this.config.NODE_PORT);
         });
     }
 
