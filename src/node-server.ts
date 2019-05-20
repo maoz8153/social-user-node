@@ -1,18 +1,19 @@
 import { createServer, Server } from 'http';
-import * as express from 'express';
-import bodyParser = require('body-parser');
-import * as cors from 'cors';
+import express, { Router } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { IConfig, ConfigService } from './core/config.service.core';
 import { MainRoute } from './routes/main.route';
 
 export class NodeServer {
-    public static readonly PORT: number = 8080;
     private app: express.Application;
+    private router: Router;
     private server: Server;
-    private port: string | number;
+    private config: IConfig;
 
     constructor() {
+        this.initEnvSettings();
         this.createApp();
-        this.initConfig();
         this.createServer();
         this.initExpressMiddleWare()
         this.initRoutes();
@@ -23,8 +24,8 @@ export class NodeServer {
         this.app = express();
     }
 
-    private initConfig(): void {
-        this.port = process.env.PORT || NodeServer.PORT;
+    private initEnvSettings(): void {
+        this.config = new ConfigService().environment;
     }
 
     private initExpressMiddleWare(): void {
@@ -33,7 +34,7 @@ export class NodeServer {
         this.app.use(cors());
         this.app.use(function (req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
-            res.header('Content-Type' ,'application/x-www-form-urlencoded');
+            res.header('Content-Type', 'application/x-www-form-urlencoded');
             res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
             res.header("Access-Control-Allow-Headers", "X-Requested-With");
             next();
@@ -45,7 +46,9 @@ export class NodeServer {
     }
 
     private initRoutes(): void {
+        this.router = Router();
         new MainRoute(this.app);
+        this.app.use(this.router);
     }
 
 
